@@ -13,7 +13,7 @@
         //document.getElementById('readout').innerHTML = JSON.stringify(record, null, 2);
         let table = grist.getTable("Table2")
         console.log(table)
-        table.getTableId().then(tableId => document.getElementById('readout').innerHTML = tableId)
+        table.getTableId().then(tableId => document.getElementById('readout').innerHTML = JSON.stringify(tableId))
         
       });
     </script>
