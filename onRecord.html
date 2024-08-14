@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>onRecord</title>
     <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@3.6.14/dist/vuetify.min.css" rel="stylesheet">
   </head>
   <body>
     <pre id="readout">Waiting for data...</pre>
@@ -17,6 +18,10 @@
         table.getTableId().then(tableId => document.getElementById('readout').innerHTML = JSON.stringify(tableId))
         
       });
+
+      
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@3.6.14/dist/vuetify.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   </body>
 </html>
