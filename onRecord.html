@@ -10,24 +10,12 @@
 
         grist.ready();
 
-        const { createApp } = Vue
-        const { createVuetify } = Vuetify
-
-        const vuetify = createVuetify()
-
-        const app = createApp()
-        app.use(vuetify).mount('#app')
-
         grist.onRecord(function(record) {
             //document.getElementById('readout').innerHTML = JSON.stringify(record, null, 2);
-            let table = grist.getTable("Table2")
-            console.log("Prova logging")
-            console.log(table)
-            table.getTableId().then(tableId => document.getElementById('readout').innerHTML = JSON.stringify(tableId))
+            let table = grist.getTable()
+            document.getElementById('readout').innerHTML = JSON.stringify(record, null, 2);
         });
       
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/vuetify@3.6.14/dist/vuetify.min.js"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   </body>
 </html>
