@@ -5,6 +5,7 @@
     <title>onRecord</title>
   </head>
   <body>
+    <pre id="content"></pre>
     <input type="button" value="Prova" onclick="alert()" />
     <script>
 
@@ -13,7 +14,7 @@
         grist.onRecord(function(record) {
             //document.getElementById('readout').innerHTML = JSON.stringify(record, null, 2);
             let table = grist.getTable()
-            document.getElementById('readout').innerHTML = JSON.stringify(record, null, 2);
+            document.getElementById('content').innerHTML = JSON.stringify(record, null, 2);
         });
       
     </script>
