@@ -55,7 +55,7 @@
             table1.append(row1(record))
             table2.append(row2(record))
             
-            sum.Ore_Chiamate.cell.text(sum.Ore_Chiamate.value += record.Ore_Chiamate)
+            sum.Ore_Chiamate.cell.text((sum.Ore_Chiamate.value += record.Ore_Chiamate).toFixed(2))
 
             sum.Costo_Ore.cell.text((sum.Costo_Ore.value += record.Costo_Ore).toFixed(2))
             sum.Totale_Ore.cell.text((sum.Totale_Ore.value += record.Totale_Ore).toFixed(2))
@@ -76,7 +76,7 @@
           let row = $("<tr>")
           row.append(td(r.Dipendente, 20))
           row.append(td(formatMeseAnno(r), 10))
-          row.append(td(r.Ore_Chiamate))
+          row.append(td(r.Ore_Chiamate.toFixed(2)))
           return row
         }
 
@@ -161,6 +161,11 @@
         
         function clearTable() {
           $('table tbody tr').remove()
+
+          for (let key in sum) {
+            sum[key].cell.text(" ")
+            sum[key].value = 0
+          }
         }
       
     </script>
