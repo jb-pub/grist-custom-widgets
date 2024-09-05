@@ -4,21 +4,83 @@
     <meta charset="utf-8">
     <title>onRecord</title>
     <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+      integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+      crossorigin="anonymous"></script>
   </head>
   <body>
-    <pre id="content"></pre>
-    
+    <input type="button" value="Clear" onclick="clearTable()"/>
+    <br/><br/>
+    <div id="content"></div>
+
     <script>
+        
 
         grist.ready();
+2
+        let table = $("<table>").attr("border", "1px solid black").attr("id", "table")
+        table.append(header())
+        $('#content').append(table);
+  
 
-        grist.onRecords(function(record) {
-            let table = grist.getTable()
-            document.getElementById('content').innerHTML = JSON.stringify(record, null, 2);
-            console.log("OnRecord")
+        async function main() {
+
+          // let dipendenti = await grist.docApi.fetchTable("Dipendenti")
+          // document.getElementById('content').innerHTML = JSON.stringify(dipendenti, null, 2);
+
+          grist.onRecord(function(record) {
+
             console.log(record)
-        });
+            table.append(row(record))
 
+              //document.getElementById('content').appendChild() = JSON.stringify(record, null, 2);
+
+          }, {
+            "includeColumns": "all",
+            "keepEncoded": true
+          });
+        }
+
+        main()
+
+        function row(r) {
+          let row = $("<tr>")
+          row.append(td(r.Dipendente))
+          row.append(td(formatMeseAnno(r)))
+          row.append(td(r.Ore_Chiamate))
+          return row
+        }
+
+        function formatMeseAnno(r) {
+          let date = new Date()
+          date.setFullYear(r.Anno, r.Mese - 1)
+          date.setDate(1)
+          return date.toLocaleString(Intl.DateTimeFormat().resolvedOptions().locale, {
+            year: "numeric",
+            month: "long"
+          })
+        }
+
+        function header() {
+          let header = $("<tr>")
+          header.append(th("Dipendente"))
+          header.append(th("Mensilità"))
+          header.append(th("Ore Chiamate"))
+          return header
+        }
+
+        function td(text) {
+          return $("<td>").text(text).css("padding", "5px")
+        }
+
+        function th(text) {
+          return $("<th>").text(text).css("padding", "5px")
+        }
+        
+        function clearTable() {
+          $('#table tr:gt(0)').remove()
+        }
       
     </script>
   </body>
