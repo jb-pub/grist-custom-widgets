@@ -86,28 +86,49 @@
         function table(header) {
           let table = $("<table>")
           let tbody = $("<tbody>")
-          let thead = $("<thead>")
-          thead.append(header)
-          table.append(thead)
+          table.append(header)
           table.append(tbody)
           return table
         }
 
         function header1() {
-          let tr = $("<tr>")
-          tr.append(th("Dipendente", 20))
-          tr.append(th("Mese", 10))
-          tr.append(th("Ore Chiamate"))
-          return tr;
+
+          let thead = $("<thead>")
+
+          thead.append($("<tr>")
+            .append(th("Dipendente", 20))
+            .append(th("Mese", 10))
+            .append(th("Ore Chiamate"))
+          )
+
+          thead.append($("<tr>")
+            .append(td(" "))
+            .append(td(" "))
+            .append(td(" "))
+          )
+
+          return thead;
         }
 
         function header2() {
-          let tr = $("<tr>")
-          tr.append(th("Ore Totali"))
-          tr.append(th("Costo Busta €"))
-          tr.append(th("Netto Atteso €"))
-          tr.append(th("Differenza €"))
-          return tr;
+          
+          let thead = $("<thead>")
+
+          thead.append($("<tr>")
+            .append(th("Ore Totali"))
+            .append(th("Costo Busta €"))
+            .append(th("Netto Atteso €"))
+            .append(th("Differenza €"))
+          )
+
+          thead.append($("<tr>")
+            .append(td(" "))
+            .append(td(" "))
+            .append(td(" "))
+            .append(td(" "))
+          )
+
+          return thead;
         }
 
         function td(text, padding) {
