@@ -7,22 +7,33 @@
     <script
       src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
       integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous">
+    </script>
+    <style>
+      table, th, td {
+        border: 1px solid;
+      }
+      table {
+        white-space: pre;
+        display: inline-block;
+        margin-right: 10px;
+      }
+    </style>
   </head>
   <body>
     <input type="button" value="Clear" onclick="clearTable()"/>
     <br/><br/>
-    <div id="content"></div>
+    <div id="content">
 
     <script>
         
 
         grist.ready();
 2
-        let table = $("<table>").attr("border", "1px solid black").attr("id", "table")
-        table.append(header())
-        $('#content').append(table);
-  
+        let table1 = table()
+        let table2 = table()
+        $('#content').append(table1)
+        $('#content').append(table2)
 
         async function main() {
 
@@ -32,7 +43,8 @@
           grist.onRecord(function(record) {
 
             console.log(record)
-            table.append(row(record))
+            table1.append(row(record))
+            table2.append(row(record))
 
               //document.getElementById('content').appendChild() = JSON.stringify(record, null, 2);
 
@@ -46,8 +58,8 @@
 
         function row(r) {
           let row = $("<tr>")
-          row.append(td(r.Dipendente))
-          row.append(td(formatMeseAnno(r)))
+          row.append(td(r.Dipendente, 20))
+          row.append(td(formatMeseAnno(r), 10))
           row.append(td(r.Ore_Chiamate))
           return row
         }
@@ -62,24 +74,34 @@
           })
         }
 
-        function header() {
-          let header = $("<tr>")
-          header.append(th("Dipendente"))
-          header.append(th("Mensilità"))
-          header.append(th("Ore Chiamate"))
-          return header
+        function table() {
+          let table = $("<table>")
+          let tbody = $("<tbody>")
+          let thead = $("<thead>")
+          let tr = $("<tr>")
+          tr.append(th("Dipendente", 20))
+          tr.append(th("Mese", 10))
+          tr.append(th("Ore Chiamate"))
+          thead.append(tr)
+          table.append(thead)
+          table.append(tbody)
+          return table
         }
 
-        function td(text) {
-          return $("<td>").text(text).css("padding", "5px")
+        function td(text, padding) {
+          if (!padding)
+            padding = 0
+          return $("<td>").text(("" + text).padEnd(padding)).css("padding", "5px")
         }
 
-        function th(text) {
-          return $("<th>").text(text).css("padding", "5px")
+        function th(text, padding) {
+          if (!padding)
+            padding = 0
+          return $("<th>").text(("" + text).padEnd(padding)).css("padding", "5px")
         }
         
         function clearTable() {
-          $('#table tr:gt(0)').remove()
+          $('table tbody tr').remove()
         }
       
     </script>
