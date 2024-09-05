@@ -29,7 +29,15 @@
         
 
         grist.ready();
-2
+
+        let sum = { 
+          Ore_Chiamate: { value: 0, cell: null },
+          Costo_Ore: { value: 0, cell: null },
+          Totale_Ore: { value: 0, cell: null },
+          Netto_Atteso: { value: 0, cell: null },
+          Differenza: { value: 0, cell: null },
+        }
+
         let table1 = table(header1())
         let table2 = table(header2())
         $('#content').append(table1)
@@ -43,8 +51,16 @@
           grist.onRecord(function(record) {
 
             console.log(record)
+
             table1.append(row1(record))
             table2.append(row2(record))
+            
+            sum.Ore_Chiamate.cell.text(sum.Ore_Chiamate.value += record.Ore_Chiamate)
+
+            sum.Costo_Ore.cell.text((sum.Costo_Ore.value += record.Costo_Ore).toFixed(2))
+            sum.Totale_Ore.cell.text((sum.Totale_Ore.value += record.Totale_Ore).toFixed(2))
+            sum.Netto_Atteso.cell.text((sum.Netto_Atteso.value += record.Netto_Atteso).toFixed(2))
+            sum.Differenza.cell.text((sum.Differenza.value += record.Differenza).toFixed(2))
 
               //document.getElementById('content').appendChild() = JSON.stringify(record, null, 2);
 
@@ -104,7 +120,7 @@
           thead.append($("<tr>")
             .append(td(" "))
             .append(td(" "))
-            .append(td(" "))
+            .append(sum.Ore_Chiamate.cell = td(" "))
           )
 
           return thead;
@@ -122,10 +138,10 @@
           )
 
           thead.append($("<tr>")
-            .append(td(" "))
-            .append(td(" "))
-            .append(td(" "))
-            .append(td(" "))
+            .append(sum.Totale_Ore.cell = td(" "))
+            .append(sum.Costo_Ore.cell = td(" "))
+            .append(sum.Netto_Atteso.cell = td(" "))
+            .append(sum.Differenza.cell = td(" "))
           )
 
           return thead;
