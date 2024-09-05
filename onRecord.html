@@ -30,8 +30,8 @@
 
         grist.ready();
 2
-        let table1 = table()
-        let table2 = table()
+        let table1 = table(header1())
+        let table2 = table(header2())
         $('#content').append(table1)
         $('#content').append(table2)
 
@@ -43,8 +43,8 @@
           grist.onRecord(function(record) {
 
             console.log(record)
-            table1.append(row(record))
-            table2.append(row(record))
+            table1.append(row1(record))
+            table2.append(row2(record))
 
               //document.getElementById('content').appendChild() = JSON.stringify(record, null, 2);
 
@@ -56,11 +56,20 @@
 
         main()
 
-        function row(r) {
+        function row1(r) {
           let row = $("<tr>")
           row.append(td(r.Dipendente, 20))
           row.append(td(formatMeseAnno(r), 10))
           row.append(td(r.Ore_Chiamate))
+          return row
+        }
+
+        function row2(r) {
+          let row = $("<tr>")
+          row.append(td(r.Totale_Ore.toFixed(2)))
+          row.append(td(r.Costo_Ore.toFixed(2)))
+          row.append(td(r.Netto_Atteso.toFixed(2)))
+          row.append(td(r.Differenza.toFixed(2)))
           return row
         }
 
@@ -74,18 +83,31 @@
           })
         }
 
-        function table() {
+        function table(header) {
           let table = $("<table>")
           let tbody = $("<tbody>")
           let thead = $("<thead>")
+          thead.append(header)
+          table.append(thead)
+          table.append(tbody)
+          return table
+        }
+
+        function header1() {
           let tr = $("<tr>")
           tr.append(th("Dipendente", 20))
           tr.append(th("Mese", 10))
           tr.append(th("Ore Chiamate"))
-          thead.append(tr)
-          table.append(thead)
-          table.append(tbody)
-          return table
+          return tr;
+        }
+
+        function header2() {
+          let tr = $("<tr>")
+          tr.append(th("Ore Totali"))
+          tr.append(th("Costo Busta €"))
+          tr.append(th("Netto Atteso €"))
+          tr.append(th("Differenza €"))
+          return tr;
         }
 
         function td(text, padding) {
