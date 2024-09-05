@@ -12,7 +12,7 @@
 
         grist.ready();
 
-        grist.onRecord(function(record) {
+        grist.onRecords(function(record) {
             let table = grist.getTable()
             document.getElementById('content').innerHTML = JSON.stringify(record, null, 2);
             console.log("OnRecord")
