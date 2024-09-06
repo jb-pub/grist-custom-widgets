@@ -74,8 +74,8 @@
 
         function row1(r) {
           let row = $("<tr>")
-          row.append(td(r.Dipendente, 20))
-          row.append(td(formatMeseAnno(r), 10))
+          row.append(td(r.Dipendente, 25))
+          row.append(td(formatMeseAnno(r), 15))
           row.append(td(r.Ore_Chiamate.toFixed(2)))
           return row
         }
@@ -112,8 +112,8 @@
           let thead = $("<thead>")
 
           thead.append($("<tr>")
-            .append(th("Dipendente", 20))
-            .append(th("Mese", 10))
+            .append(th("Dipendente", 25))
+            .append(th("Mese", 15))
             .append(th("Ore Chiamate"))
           )
 
