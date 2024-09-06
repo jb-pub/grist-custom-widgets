@@ -18,6 +18,9 @@
         display: inline-block;
         margin-right: 10px;
       }
+      td:nth-child(odd), th:nth-child(odd) {
+        background-color: #D6EEEE;
+      }
     </style>
   </head>
   <body>
@@ -37,6 +40,7 @@
           Totale_Ore: { value: 0, cell: null },
           Netto_Atteso: { value: 0, cell: null },
           Differenza: { value: 0, cell: null },
+          Totale_Spese: { value: 0, cell: null },
         }
 
         let table1 = table(header1())
@@ -54,10 +58,11 @@
             if (!$('#checkbox').is(':checked'))
               return;
 
-            console.log(record)
+            record.Totale_Spese = record.Costo_Ore + record.Differenza
 
-            table1.append(row1(record))
-            table2.append(row2(record))
+            let r1 = row1(record)
+            table1.append(r1)
+            table2.append(row2(record, r1))
             
             sum.Ore_Chiamate.cell.text((sum.Ore_Chiamate.value += record.Ore_Chiamate).toFixed(2))
 
@@ -65,6 +70,7 @@
             sum.Totale_Ore.cell.text((sum.Totale_Ore.value += record.Totale_Ore).toFixed(2))
             sum.Netto_Atteso.cell.text((sum.Netto_Atteso.value += record.Netto_Atteso).toFixed(2))
             sum.Differenza.cell.text((sum.Differenza.value += record.Differenza).toFixed(2))
+            sum.Totale_Spese.cell.text((sum.Totale_Spese.value += record.Totale_Spese).toFixed(2))
 
               //document.getElementById('content').appendChild() = JSON.stringify(record, null, 2);
 
@@ -84,12 +90,26 @@
           return row
         }
 
-        function row2(r) {
+        function row2(r, otherRow) {
           let row = $("<tr>")
           row.append(td(r.Totale_Ore.toFixed(2)))
           row.append(td(r.Costo_Ore.toFixed(2)))
           row.append(td(r.Netto_Atteso.toFixed(2)))
           row.append(td(r.Differenza.toFixed(2)))
+          row.append(td(r.Totale_Spese.toFixed(2)))
+          row.append(td("DEL").click(() => {
+            row.remove()
+            otherRow.remove()
+
+            sum.Ore_Chiamate.cell.text((sum.Ore_Chiamate.value -= r.Ore_Chiamate).toFixed(2))
+
+            sum.Costo_Ore.cell.text((sum.Costo_Ore.value -= r.Costo_Ore).toFixed(2))
+            sum.Totale_Ore.cell.text((sum.Totale_Ore.value -= r.Totale_Ore).toFixed(2))
+            sum.Netto_Atteso.cell.text((sum.Netto_Atteso.value -= r.Netto_Atteso).toFixed(2))
+            sum.Differenza.cell.text((sum.Differenza.value -= r.Differenza).toFixed(2))
+            sum.Totale_Spese.cell.text((sum.Totale_Spese.value -= r.Totale_Spese).toFixed(2))
+
+          }))
           return row
         }
 
@@ -139,6 +159,8 @@
             .append(th("Costo Busta €"))
             .append(th("Netto Atteso €"))
             .append(th("Differenza €"))
+            .append(th("Totale Spese €"))
+            .append(th(" "))
           )
 
           thead.append($("<tr>")
@@ -146,6 +168,7 @@
             .append(sum.Costo_Ore.cell = td(" "))
             .append(sum.Netto_Atteso.cell = td(" "))
             .append(sum.Differenza.cell = td(" "))
+            .append(sum.Totale_Spese.cell = td(" "))
           )
 
           return thead;
