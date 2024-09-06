@@ -98,6 +98,10 @@
           row.append(td(r.Differenza.toFixed(2)))
           row.append(td(r.Totale_Spese.toFixed(2)))
           row.append(td("DEL").click(() => {
+
+            if (!$('#checkbox').is(':checked'))
+              return;
+
             row.remove()
             otherRow.remove()
 
