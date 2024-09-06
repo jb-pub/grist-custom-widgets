@@ -21,6 +21,7 @@
     </style>
   </head>
   <body>
+    <input type="checkbox" value="enabled" id="checkbox"/>Enabled
     <input type="button" value="Clear" onclick="clearTable()"/>
     <br/><br/>
     <div id="content">
@@ -49,6 +50,9 @@
           // document.getElementById('content').innerHTML = JSON.stringify(dipendenti, null, 2);
 
           grist.onRecord(function(record) {
+
+            if (!$('#checkbox').is(':checked'))
+              return;
 
             console.log(record)
 
